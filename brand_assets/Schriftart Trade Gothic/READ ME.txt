@@ -1,0 +1,1 @@
+Entpacke die drei Schriftdateien auf den Desktop, markiere sie und drücke auf Rechtsklick/Installieren. Danach können die Dateien wieder gelöscht werden.
