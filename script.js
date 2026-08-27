@@ -272,11 +272,74 @@ if (eventsGrid) {
   }
 }
 
-// Akkordeon: nur ein Panel pro Gruppe gleichzeitig offen
+// Akkordeon: sanftes Auf-/Zuklappen per Web Animations API, nur ein Panel pro Gruppe offen
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function createAccordionItem(details, onExpand) {
+  const summary = details.querySelector(':scope > summary');
+  const content = details.querySelector(':scope > .accordion-content');
+  let animation = null;
+  let isExpanding = false;
+  let isClosing = false;
+
+  function runAnimation(opening) {
+    const startHeight = details.offsetHeight + 'px';
+    const endHeight = opening
+      ? (summary.offsetHeight + content.offsetHeight) + 'px'
+      : summary.offsetHeight + 'px';
+
+    isExpanding = opening;
+    isClosing = !opening;
+    details.style.overflow = 'hidden';
+
+    if (animation) animation.cancel();
+    animation = details.animate(
+      { height: [startHeight, endHeight] },
+      { duration: reduceMotion ? 0 : 280, easing: 'ease' }
+    );
+    animation.onfinish = () => {
+      details.open = opening;
+      animation = null;
+      isExpanding = false;
+      isClosing = false;
+      details.style.height = '';
+      details.style.overflow = '';
+    };
+    animation.oncancel = () => { isExpanding = false; isClosing = false; };
+  }
+
+  function expand() {
+    details.style.overflow = 'hidden';
+    details.style.height = details.offsetHeight + 'px';
+    details.open = true;
+    requestAnimationFrame(() => runAnimation(true));
+  }
+
+  function collapse() {
+    runAnimation(false);
+  }
+
+  summary.addEventListener('click', e => {
+    e.preventDefault();
+    if (isClosing || !details.open) {
+      onExpand(item);
+      expand();
+    } else if (isExpanding || details.open) {
+      collapse();
+    }
+  });
+
+  const item = { details, collapse, get isExpanding() { return isExpanding; } };
+  return item;
+}
+
 document.querySelectorAll('.accordion').forEach(group => {
-  const items = group.querySelectorAll(':scope > .accordion-item');
-  items.forEach(item => item.addEventListener('toggle', () => {
-    if (!item.open) return;
-    items.forEach(other => { if (other !== item) other.open = false; });
-  }));
+  const items = [];
+  group.querySelectorAll(':scope > .accordion-item').forEach(details => {
+    items.push(createAccordionItem(details, opened => {
+      items.forEach(other => {
+        if (other !== opened && (other.details.open || other.isExpanding)) other.collapse();
+      });
+    }));
+  });
 });

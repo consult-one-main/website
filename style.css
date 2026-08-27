@@ -65,16 +65,22 @@ p, .accordion-content li, .legal-block li {
 .stat__label,
 .eyebrow,
 .cta-label,
-.team-card__name,
-.team-card__role,
-.team-card__desc,
-.network-card p,
 .hero__claim,
 .alumni-sublabel,
 .partner-logo-card__name,
 .events-empty,
 .process-step__label {
   text-align: left;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+/* Zentrierte Karten (Foto + Name/Rolle/Text mittig darunter) */
+.team-card__name,
+.team-card__role,
+.team-card__desc,
+.team-card__email,
+.network-card p {
+  text-align: center;
   hyphens: none;
   -webkit-hyphens: none;
 }
