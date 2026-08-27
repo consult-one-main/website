@@ -1,5 +1,59 @@
+# ============================================================
+# robots.txt — Consult One (Stand 2026)
+# Strategie: Suche + KI-Retrieval erlaubt (Sichtbarkeit in KI-Antworten).
+# KI-Training optional erlaubt. Nur bekannt nicht-konforme Bots gesperrt.
+# ============================================================
+
 User-agent: *
 Allow: /
-Disallow: /impressum.html
+
+# ---- Google (Suche + AI Overviews laufen über den normalen Googlebot) ----
+User-agent: Googlebot
+Allow: /
+# Google-Extended betrifft nur Gemini-Training/Grounding – NICHT Ranking/AIO
+User-agent: Google-Extended
+Allow: /
+
+# ---- OpenAI ----
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: GPTBot
+Allow: /
+
+# ---- Anthropic ----
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+# ---- Perplexity (respektiert robots.txt nur eingeschränkt) ----
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+
+# ---- Apple ----
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# ---- Weitere ----
+User-agent: meta-externalagent
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: CCBot
+Allow: /
+
+# ---- Bekannt nicht-konform: ignoriert robots.txt häufig ohnehin ----
+User-agent: Bytespider
+Disallow: /
 
 Sitemap: https://www.consult-one.de/sitemap.xml
