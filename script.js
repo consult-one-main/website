@@ -110,7 +110,7 @@ if (partnerCarousel) {
   resetTimer();
 }
 
-// Counter animation for stats — triggers when stats enter the viewport
+// Counter animation for stats, triggers when stats enter the viewport
 function animateCounter(el, target, suffix, duration) {
   let startTime = null;
   const step = (timestamp) => {
@@ -343,3 +343,118 @@ document.querySelectorAll('.accordion').forEach(group => {
     }));
   });
 });
+
+// Leistungen: Kategorie-Tabs
+const servicesTablist = document.querySelector('.services-tabs');
+if (servicesTablist) {
+  const tabs = Array.from(servicesTablist.querySelectorAll('.services-tab'));
+  const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+
+  function activateServicesTab(tab, { focus = true } = {}) {
+    tabs.forEach((t, i) => {
+      const selected = t === tab;
+      t.setAttribute('aria-selected', String(selected));
+      t.tabIndex = selected ? 0 : -1;
+      panels[i].hidden = !selected;
+    });
+    if (focus) tab.focus();
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activateServicesTab(tab, { focus: false }));
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); activateServicesTab(tabs[(i + 1) % tabs.length]); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); activateServicesTab(tabs[(i - 1 + tabs.length) % tabs.length]); }
+    });
+  });
+
+  function activateServicesTabFromHash() {
+    const tab = tabs.find(t => t.id === location.hash.slice(1));
+    if (tab) activateServicesTab(tab, { focus: false });
+  }
+  activateServicesTabFromHash();
+  window.addEventListener('hashchange', activateServicesTabFromHash);
+}
+
+// Prozess-Ablauf (Projektablauf / Bewerbungsweg): Kopfzeile pinnt beim Scrollen,
+// die Schrittreihe läuft dabei seitlich mit. Ohne JS bzw. bei reduced-motion
+// bleibt die Reihe eine normale, horizontal scrollbare Liste (siehe CSS).
+function initProcessFlow(root) {
+  const sticky    = root.querySelector('.process-flow__sticky');
+  const heading   = sticky.querySelector('.container');
+  const viewport  = root.querySelector('.process-flow__viewport');
+  const track     = root.querySelector('.process-flow__track');
+  const cards     = Array.from(track.querySelectorAll('.process-flow__card'));
+  const total     = cards.length;
+  const navHeight = 70;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desktopMq = window.matchMedia('(min-width: 900px)');
+
+  let maxShift = 0;
+  let active = false;
+
+  function measure() {
+    track.style.transform = 'none';
+    root.classList.remove('process-flow--pinned');
+
+    // Erste/letzte Karte sollen an der Überschrift ausgerichtet starten und
+    // enden, statt an einem festen Abstand vom Bildschirmrand zu kleben.
+    if (heading) {
+      const inset = Math.max(32, heading.getBoundingClientRect().left);
+      root.style.setProperty('--process-flow-inset', inset + 'px');
+    }
+
+    maxShift = Math.max(0, track.scrollWidth - viewport.clientWidth);
+
+    // Nur pinnen, wenn der angepinnte Inhalt auch unter die Navi passt,
+    // sonst bliebe der untere Teil des Bildschirms unerreichbar.
+    const fitsVertically = sticky.offsetHeight <= (window.innerHeight - navHeight) + 60;
+    active = desktopMq.matches && !reduceMotion && maxShift > 0 && fitsVertically;
+
+    if (active) {
+      root.classList.add('process-flow--pinned');
+      root.style.height = (sticky.offsetHeight + maxShift) + 'px';
+      // Bewegung läuft komplett über den transform unten, nicht über
+      // natives Scrollen im Viewport.
+      viewport.scrollLeft = 0;
+    } else {
+      root.style.height = 'auto';
+    }
+    onScroll();
+  }
+
+  function onScroll() {
+    if (!active) { track.style.transform = 'none'; return; }
+    const rect = root.getBoundingClientRect();
+    const progress = Math.max(0, Math.min(1, (navHeight - rect.top) / maxShift));
+    track.style.transform = 'translate3d(' + (-progress * maxShift) + 'px,0,0)';
+    root.style.setProperty('--process-flow-progress', progress);
+
+    const currentIndex = Math.max(0, Math.min(total - 1, Math.round(progress * (total - 1))));
+    cards.forEach((card, i) => card.classList.toggle('is-passed', i <= currentIndex));
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { onScroll(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', measure);
+
+  // Tastaturfokus in einer Karte bringt diese ins Bild, auch während gepinnt.
+  track.addEventListener('focusin', e => {
+    if (!active) return;
+    const card = e.target.closest('.process-flow__card');
+    if (!card) return;
+    const index = cards.indexOf(card);
+    const targetProgress = total > 1 ? index / (total - 1) : 0;
+    const docTop = root.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: docTop - navHeight + targetProgress * maxShift, behavior: 'smooth' });
+  });
+
+  measure();
+}
+
+document.querySelectorAll('.process-flow').forEach(initProcessFlow);

@@ -4,7 +4,7 @@
 
 ## Kernseiten
 - [Startseite](https://www.consult-one.de/): Überblick über Consult One, Leistungen, Kennzahlen und Referenzkunden
-- [Leistungen](https://www.consult-one.de/leistungen.html): Strategie & Potential, Personal & Entwicklung, Qualitätsmanagement & IT
+- [Leistungen](https://www.consult-one.de/leistungen.html): Strategie & Potential, Personal & Entwicklung, Qualitätsmanagement & IT, Kundenreferenzen, Broschüre zum Download, Terminbuchung fürs Erstgespräch
 - [Über uns](https://www.consult-one.de/ueber-uns.html): Team, Vorstand, Werte, Netzwerk und Partner
 - [Für Studierende](https://www.consult-one.de/fuer-studierende.html): Mitgliedschaft, Anwartschaft und Bewerbungsprozess
 

@@ -1,5 +1,5 @@
 # ============================================================
-# robots.txt — Consult One (Stand 2026)
+# robots.txt: Consult One (Stand 2026)
 # Strategie: Suche + KI-Retrieval erlaubt (Sichtbarkeit in KI-Antworten).
 # KI-Training optional erlaubt. Nur bekannt nicht-konforme Bots gesperrt.
 # ============================================================

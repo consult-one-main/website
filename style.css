@@ -711,6 +711,7 @@ p, .accordion-content li, .legal-block li {
 .contact-cta__text h2 { color: var(--white); margin-bottom: 0.75rem; }
 .contact-cta__text p { color: var(--white); margin-bottom: 2rem; }
 .contact-cta__text .heading-bar { margin-bottom: 2.5rem; }
+.cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
 
 .contact-person {
   display: flex;
@@ -791,37 +792,74 @@ p, .accordion-content li, .legal-block li {
 .page-hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
 
 /* ── SERVICES PAGE ───────────────────────────────────────── */
-.services-category { margin-bottom: 4rem; }
-.category-header {
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px solid var(--orange);
+.services-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--mid-grey);
 }
-.category-header h2 { font-size: 1.5rem; margin: 0; }
+.services-tab {
+  font-family: 'TradeGothicBold', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+  background: none;
+  border: none;
+  padding: 0.9rem 1.4rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+.services-tab::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 3px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.services-tab:hover { color: var(--dark-grey); }
+.services-tab[aria-selected="true"] { color: var(--dark-grey); }
+.services-tab[aria-selected="true"]::after { transform: scaleX(1); }
+.services-tab:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+.services-grid[hidden] { display: none; }
 .service-card {
   background: var(--white);
   padding: 1.75rem;
-  border-left: 4px solid var(--orange);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-top: 3px solid var(--orange);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.service-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
 .service-card__num {
   font-family: 'TradeGothicBold', sans-serif;
   font-weight: 700;
   font-size: 2rem;
   color: var(--orange);
   line-height: 1;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.65rem;
 }
-.service-card h3 { font-size: 1.05rem; margin-bottom: 0.65rem; color: var(--dark-grey); }
-.service-card p  { font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; }
+.service-card h3 { font-size: 1rem; margin-bottom: 0.65rem; }
+.service-card p { font-size: 0.98rem; color: var(--text-light); line-height: 1.65; text-transform: none; text-align: left; }
+@media (max-width: 1100px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
 
 /* ── PROCESS STEPS ───────────────────────────────────────── */
 .process-grid {
@@ -1030,6 +1068,139 @@ p, .accordion-content li, .legal-block li {
 .events-empty a { color: var(--orange); text-decoration: none; }
 .events-empty a:hover { text-decoration: underline; }
 
+/* ── BROSCHÜRE (LEISTUNGEN) ─────────────────────────────── */
+.brochure-meta {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* ── REFERENZEN / KUNDENZITATE (LEISTUNGEN) ─────────────── */
+.reference-pull {
+  position: relative;
+  background: var(--near-black);
+  color: var(--white);
+  padding: 2.75rem 3.25rem;
+  margin-bottom: 3rem;
+  overflow: hidden;
+}
+.reference-pull::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--orange);
+}
+.reference-pull__quote {
+  font-family: 'TradeGothicBold', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: none;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  line-height: 1.45;
+  max-width: 880px;
+  margin-bottom: 1.5rem;
+}
+.reference-pull__author { font-size: 0.95rem; color: rgba(255,255,255,0.6); text-transform: none; margin-bottom: 0; }
+.reference-pull__author strong { color: var(--white); font-weight: 600; }
+.reference-pull__project {
+  font-size: 0.85rem;
+  color: var(--orange);
+  text-transform: none;
+  margin-top: 0.3rem;
+}
+
+.reference-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.reference-card {
+  background: var(--white);
+  padding: 1.75rem;
+  border-top: 3px solid var(--orange);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), calc(100% - 1.5rem) 100%, 0 100%);
+}
+.reference-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), calc(100% - 2rem) 100%, 0 100%);
+}
+.reference-card__logo {
+  height: 30px;
+  width: auto;
+  max-width: 65%;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+  margin-bottom: 1.25rem;
+}
+.reference-card__quote {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.65;
+  text-transform: none;
+  margin-bottom: 1rem;
+}
+.reference-card__author { font-size: 0.85rem; color: var(--text-light); text-transform: none; }
+.reference-card__author strong { color: var(--dark-grey); }
+
+/* ── TERMINBUCHUNG (LEISTUNGEN) ─────────────────────────── */
+.booking-panel {
+  position: relative;
+  background: var(--near-black);
+  color: var(--white);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.5rem), calc(100% - 2.5rem) 100%, 0 100%);
+}
+.booking-panel::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--orange);
+}
+.booking-panel h2 { color: var(--white); margin-bottom: 0.85rem; }
+.booking-panel__intro { color: rgba(255,255,255,0.7); }
+.booking-panel__facts {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.booking-panel__facts li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.92rem;
+  text-transform: none;
+  color: rgba(255,255,255,0.85);
+}
+.booking-panel__facts svg { width: 17px; height: 17px; flex-shrink: 0; color: var(--orange); }
+.booking-panel__action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+.booking-panel__action .btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  font-family: 'TradeGothicBold', sans-serif;
+}
+.booking-panel__note { font-size: 0.82rem; color: rgba(255,255,255,0.5); text-transform: none; }
+.booking-panel__note a { color: rgba(255,255,255,0.75); }
+.booking-panel__note a:hover { color: var(--orange); }
+
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1120,30 +1291,6 @@ p, .accordion-content li, .legal-block li {
   line-height: 1.75;
   text-transform: none;
 }
-
-.apply-step {
-  background: var(--white);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  border-top: 3px solid var(--orange);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.apply-step__num {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 50px; height: 50px;
-  background: var(--orange);
-  color: var(--white);
-  border-radius: 50%;
-  font-family: 'TradeGothicBold', sans-serif;
-  font-weight: 700; font-size: 1.3rem;
-  margin-bottom: 1rem;
-}
-.apply-step h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
-.apply-step p  { font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; text-align: center; hyphens: none; }
-.apply-step__cta { margin-top: 1.5rem; }
 
 .about-split {
   display: grid;
@@ -1380,178 +1527,92 @@ p, .accordion-content li, .legal-block li {
 }
 .photo-strip__item:hover img { transform: scale(1.04); }
 
-/* ── PROCESS TRACK (Projektablauf) ──────────────────────── */
-/* Vertikale Timeline: Icon links mit Verbindungslinie, Karte rechts */
-.process-track {
-  position: relative;
-  max-width: 700px;
-  /* Vertikale Linie durch alle Icon-Mitten */
+
+/* ── PROCESS FLOW (Projektablauf / Bewerbungsweg) ─────────── */
+/* Beim Runterscrollen wird die Kopfzeile angepinnt und die Schrittreihe
+   läuft seitlich mit (siehe script.js). Ohne JS bzw. bei reduced-motion
+   bleibt es eine normale, horizontal scrollbare Reihe. */
+.process-flow__sticky {
+  position: sticky;
+  top: 70px;
+  background: var(--light-grey);
 }
-.process-track::before {
+.process-flow__viewport {
+  overflow: hidden;
+  padding: 0.5rem 0 0.5rem;
+  /* Ohne das gleicht der Browser die per JS gesetzte Track-Padding-Änderung
+     durch einen eigenen scrollLeft-Ausgleich aus (Scroll Anchoring) und
+     hebt den gewünschten Einzug wieder auf. */
+  overflow-anchor: none;
+}
+.process-flow__viewport .container { overflow: visible; }
+.process-flow__track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  padding: 0 var(--process-flow-inset, 2rem);
+  will-change: transform;
+  position: relative;
+}
+/* Verbindungslinie durch die Icon-Mitten; füllt sich beim Scrollen orange */
+.process-flow__track::before {
   content: '';
   position: absolute;
-  left: 25px; /* Mitte des 52px-Icons */
-  top: 52px;
-  bottom: 26px;
-  width: 2px;
-  background: var(--orange);
-  opacity: 0.35;
+  left: var(--process-flow-inset, 2rem); right: var(--process-flow-inset, 2rem); top: 54px;
+  height: 2px;
+  background: linear-gradient(to right,
+    var(--orange) calc(var(--process-flow-progress, 0) * 100%),
+    var(--mid-grey) calc(var(--process-flow-progress, 0) * 100%));
   z-index: 0;
 }
-
-.process-track__step {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.75rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-.process-track__step:last-child { margin-bottom: 0; }
-
-/* Icon-Kreis auf der Verbindungslinie */
-.process-track__icon {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  background: var(--orange);
-  color: var(--white);
-  display: flex; align-items: center; justify-content: center;
+.process-flow__card {
+  width: clamp(280px, 26vw, 360px);
   flex-shrink: 0;
+  background: var(--white);
+  padding: 1.75rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
   position: relative;
   z-index: 1;
 }
-.process-track__icon svg { width: 26px; height: 26px; display: block; }
-.process-track__icon--final {
-  background: var(--orange);
-}
-
-/* Inhaltsspalte rechts vom Icon */
-.process-track__content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding-top: 2px; /* optische Ausrichtung mit Icon-Mitte */
-}
-
-/* Schrittnummer – groß, innerhalb der Karte */
-.process-track__badge {
-  font-family: 'TradeGothicBold', sans-serif;
-  font-weight: 700;
-  font-size: 1.6rem;
-  letter-spacing: 0.05em;
-  color: var(--orange);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-  display: block;
-}
-
-/* Karte mit Inhalt */
-.process-track__card {
-  background: var(--white);
-  border-left: 3px solid var(--orange);
-  padding: 1.1rem 1.4rem 1.25rem;
-  box-shadow: 0 2px 14px rgba(0,0,0,0.06);
-}
-.process-track__card h3 { font-size: 1rem; margin-bottom: 0.4rem; color: var(--dark-grey); }
-.process-track__card p  { font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; margin: 0; }
-
-/* ── PROCESS FLOW (Projektablauf redesign) ───────────────── */
-.process-flow { display: flex; flex-direction: column; gap: 0; }
-
-.process-row {
-  display: grid;
-  grid-template-columns: 1fr 3.5rem 1fr 3.5rem 1fr;
-  align-items: stretch;
-  gap: 0;
-}
-
-.process-step-v2 {
-  background: var(--white);
-  padding: 2rem 1.75rem;
-  border-top: 3px solid var(--orange);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  position: relative;
-}
-
-.process-step-v2__num {
+.process-flow__icon {
   width: 44px; height: 44px;
-  background: var(--orange);
-  color: var(--white);
+  background: var(--white);
+  color: var(--orange);
+  border: 2px solid var(--orange);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'TradeGothicBold', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
+  flex-shrink: 0;
   margin-bottom: 1rem;
-  flex-shrink: 0;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
-
-.process-step-v2 h3 { font-size: 1.05rem; margin-bottom: 0.65rem; color: var(--dark-grey); }
-.process-step-v2 p  { font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; }
-
-/* Chevron arrow between step cards */
-.process-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-  padding: 0 4px;
-}
-.process-arrow::before {
-  content: '';
-  flex: 1;
-  height: 2px;
+.process-flow__card.is-passed .process-flow__icon {
   background: var(--orange);
-  margin-right: 4px;
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(238,137,29,0.18);
 }
-.process-arrow::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid var(--orange);
-  border-right: 2px solid var(--orange);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-}
+.process-flow__icon svg { width: 22px; height: 22px; display: block; }
+.process-flow__card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; color: var(--dark-grey); }
+.process-flow__card p:not(.eyebrow) { font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; }
+.process-flow__cta { display: inline-block; margin-top: 1.25rem; }
 
-/* Row 2: reversed visual order so step 04 is on the right (below turn) */
-.process-row--rtl > *:nth-child(1) { grid-column: 5; }
-.process-row--rtl > *:nth-child(2) { grid-column: 4; }
-.process-row--rtl > *:nth-child(3) { grid-column: 3; }
-.process-row--rtl > *:nth-child(4) { grid-column: 2; }
-.process-row--rtl > *:nth-child(5) { grid-column: 1; }
-/* Flip arrows to point left */
-.process-row--rtl .process-arrow { transform: scaleX(-1); }
+/* Ohne Pinning (reduced motion / kein JS / zu wenig Höhe): native Reihe */
+.process-flow:not(.process-flow--pinned) .process-flow__viewport {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) var(--mid-grey);
+}
+.process-flow:not(.process-flow--pinned) .process-flow__card { scroll-snap-align: start; }
+.process-flow:not(.process-flow--pinned) .process-flow__sticky { position: static; }
 
-/* S-curve connector between row 1 and row 2 */
-.process-turn {
-  display: grid;
-  grid-template-columns: 1fr 3.5rem 1fr 3.5rem 1fr;
-  height: 3.5rem;
-}
-
-.process-turn__arrow {
-  grid-column: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.process-turn__arrow::before {
-  content: '';
-  flex: 1;
-  width: 2px;
-  background: var(--orange);
-}
-.process-turn__arrow::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-bottom: 2px solid var(--orange);
-  border-right: 2px solid var(--orange);
-  transform: rotate(45deg);
-  margin-top: -6px;
-  flex-shrink: 0;
-  margin-bottom: 2px;
+@media (max-width: 899px) {
+  .process-flow__track { flex-direction: column; width: auto; padding: 0 2rem; gap: 1.75rem; }
+  .process-flow__track::before { display: none; }
+  .process-flow__card { width: auto; border-top: 3px solid var(--orange); }
+  .process-flow__viewport { overflow: visible !important; padding-bottom: 0; }
+  .process-flow__icon,
+  .process-flow__card.is-passed .process-flow__icon { background: var(--orange); color: var(--white); border-color: var(--orange); box-shadow: none; }
 }
 
 /* ── PHOTO CAROUSEL (Vereinsleben) ──────────────────────── */
@@ -1748,23 +1809,13 @@ p, .accordion-content li, .legal-block li {
 @media (max-width: 900px) {
   .footer__grid         { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .contact-cta__inner   { grid-template-columns: 1fr; gap: 2.5rem; }
+  .booking-panel        { grid-template-columns: 1fr; gap: 2rem; text-align: left; }
+  .booking-panel__action { align-items: flex-start; }
   .process-grid         { grid-template-columns: repeat(2, 1fr); }
   .benefits-grid        { grid-template-columns: 1fr; }
   .competencies          { grid-template-columns: 1fr; gap: 1.5rem; }
   .entry-cards          { grid-template-columns: 1fr; }
   .events-grid          { grid-template-columns: repeat(2, 1fr); }
-  /* Process flow collapses to single column */
-  .process-row          { grid-template-columns: 1fr; }
-  .process-arrow        { display: none; }
-  .process-turn         { display: none; }
-  .process-step-v2,
-  .apply-step            { margin-bottom: 0.75rem; }
-  /* Reset RTL column placements so items flow naturally top-to-bottom */
-  .process-row--rtl > *:nth-child(1),
-  .process-row--rtl > *:nth-child(2),
-  .process-row--rtl > *:nth-child(3),
-  .process-row--rtl > *:nth-child(4),
-  .process-row--rtl > *:nth-child(5) { grid-column: auto; }
 }
 @media (max-width: 768px) {
   .hero { min-height: auto; padding-bottom: 4rem; }
@@ -1780,7 +1831,6 @@ p, .accordion-content li, .legal-block li {
   .stats__grid      { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
   .features__grid   { grid-template-columns: 1fr; }
   .service-teasers  { grid-template-columns: 1fr; }
-  .services-grid    { grid-template-columns: 1fr; }
   .events-grid      { grid-template-columns: 1fr; }
   .process-grid     { grid-template-columns: 1fr; }
   .team-grid        { grid-template-columns: repeat(2, 1fr); }
@@ -1790,6 +1840,9 @@ p, .accordion-content li, .legal-block li {
   .contact-person   { flex-direction: column; text-align: center; }
   .page-hero        { padding: 56px 0 80px; }
   .photo-carousel   { height: 240px; }
+  .reference-pull   { padding: 2rem 1.5rem; }
+  .booking-panel    { padding: 2rem 1.5rem; clip-path: none; border-top: 3px solid var(--orange); }
+  .booking-panel::before { display: none; }
 }
 @media (max-width: 900px) {
   .wir-grid { grid-template-columns: 1fr; gap: 2.5rem; }

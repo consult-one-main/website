@@ -135,7 +135,7 @@
       <li><a href="ueber-uns.html">Über uns</a></li>
       <li><a href="impressum.html">Impressum</a></li>
     </ul>
-    <a href="ueber-uns.html#vorstand" class="btn btn--primary nav__cta">Kontakt aufnehmen</a>
+    <a href="#termin" class="btn btn--primary nav__cta">Termin buchen</a>
   </div>
 </nav>
 
@@ -154,83 +154,89 @@
 <section class="section section--grey" style="padding-top: 56px;">
   <div class="container">
 
-    <!-- Kategorie 1 -->
-    <div class="services-category" id="strategie">
-      <div class="category-header">
-        <h2>Strategie &amp; Potential</h2>
+    <div class="services-tabs" role="tablist" aria-label="Leistungskategorien">
+      <button class="services-tab" id="strategie" type="button" role="tab" aria-selected="true" aria-controls="panel-strategie">Strategie &amp; Potential</button>
+      <button class="services-tab" id="personal" type="button" role="tab" aria-selected="false" aria-controls="panel-personal" tabindex="-1">Personal &amp; Entwicklung</button>
+      <button class="services-tab" id="qualitaet" type="button" role="tab" aria-selected="false" aria-controls="panel-qualitaet" tabindex="-1">Qualitätsmanagement &amp; IT</button>
+    </div>
+
+    <div class="services-grid" id="panel-strategie" role="tabpanel" aria-labelledby="strategie">
+      <div class="service-card">
+        <div class="service-card__num">01</div>
+        <h3>Kunden- und Wettbewerbsanalysen</h3>
+        <p>Wir analysieren Ihre Kunden, segmentieren den Markt und identifizieren Ihre Zielgruppen. Zudem analysieren wir Ihre Wettbewerber und deren Einfluss auf Ihre Marktposition und geben Handlungsempfehlungen, dem zu begegnen.</p>
       </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-card__num">01</div>
-          <h3>Kunden- und Wettbewerbsanalysen</h3>
-          <p>Wir analysieren Ihre Kunden, segmentieren den Markt und identifizieren Ihre Zielgruppen. Zudem analysieren wir Ihre Wettbewerber und deren Einfluss auf Ihre Marktposition und geben Handlungsempfehlungen, dem zu begegnen.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">02</div>
-          <h3>Markteintritts- und Wachstumsstrategien</h3>
-          <p>Wir entwickeln individuelle Strategien, um Markteintrittsbarrieren zu überwinden und langfristiges Wachstum für neue Geschäftsbereiche oder Produkte zu sichern.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">03</div>
-          <h3>Marketing-, Preis- und Vertriebsstrategie</h3>
-          <p>Wir entwickeln Konzepte, die zu Ihrer Zielgruppe passen, und helfen so dabei, den Umsatz zu steigern.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">04</div>
-          <h3>Marktanalyse und Unternehmensausrichtung</h3>
-          <p>Wir analysieren Trends, prognostizieren Entwicklungen und identifizieren potenzielle Geschäftsfelder, um Ihnen fundierte Entscheidungsgrundlagen für langfristigen Erfolg zu bieten. Zusätzlich erkennen wir technologische Trends und decken Marktdynamiken auf, um Ihnen einen Wissensvorsprung zu sichern.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">05</div>
-          <h3>Finanzmodellierung</h3>
-          <p>Wir erstellen Finanzmodelle, die eine nachvollziehbare Darstellung der finanziellen Lage und Zukunftsperspektiven Ihres Unternehmens bieten, um so Transparenz zu schaffen und potenzielle Investoren von der Rentabilität und dem Wachstumspotenzial zu überzeugen.</p>
-        </div>
+      <div class="service-card">
+        <div class="service-card__num">02</div>
+        <h3>Markteintritts- und Wachstumsstrategien</h3>
+        <p>Wir entwickeln individuelle Strategien, um Markteintrittsbarrieren zu überwinden und langfristiges Wachstum für neue Geschäftsbereiche oder Produkte zu sichern.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__num">03</div>
+        <h3>Marketing-, Preis- und Vertriebsstrategie</h3>
+        <p>Wir entwickeln Konzepte, die zu Ihrer Zielgruppe passen, und helfen so dabei, den Umsatz zu steigern.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__num">04</div>
+        <h3>Marktanalyse und Unternehmensausrichtung</h3>
+        <p>Wir analysieren Trends, prognostizieren Entwicklungen und identifizieren potenzielle Geschäftsfelder, um Ihnen fundierte Entscheidungsgrundlagen für langfristigen Erfolg zu bieten. Zusätzlich erkennen wir technologische Trends und decken Marktdynamiken auf, um Ihnen einen Wissensvorsprung zu sichern.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__num">05</div>
+        <h3>Finanzmodellierung</h3>
+        <p>Wir erstellen Finanzmodelle, die eine nachvollziehbare Darstellung der finanziellen Lage und Zukunftsperspektiven Ihres Unternehmens bieten, um so Transparenz zu schaffen und potenzielle Investoren von der Rentabilität und dem Wachstumspotenzial zu überzeugen.</p>
       </div>
     </div>
 
-    <!-- Kategorie 2 -->
-    <div class="services-category" id="personal">
-      <div class="category-header">
-        <h2>Personal &amp; Entwicklung</h2>
+    <div class="services-grid" id="panel-personal" role="tabpanel" aria-labelledby="personal" hidden>
+      <div class="service-card">
+        <div class="service-card__num">01</div>
+        <h3>Recruiting</h3>
+        <p>Wir helfen Ihnen, die idealen Bewerber:innen zu identifizieren, auszuwählen und für Ihr Unternehmen zu gewinnen. Unser junges Team bietet wertvolle Einblicke in die Denkweise der Generation Z und setzt gleichzeitig eine methodische Herangehensweise ein, um die besten Talente unabhängig vom Alter zu finden.</p>
       </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-card__num">06</div>
-          <h3>Recruiting</h3>
-          <p>Wir helfen Ihnen, die idealen Bewerber:innen zu identifizieren, auszuwählen und für Ihr Unternehmen zu gewinnen. Unser junges Team bietet wertvolle Einblicke in die Denkweise der Generation Z und setzt gleichzeitig eine methodische Herangehensweise ein, um die besten Talente unabhängig vom Alter zu finden.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">07</div>
-          <h3>Schulungen und Weiterentwicklung</h3>
-          <p>Wir erarbeiten gemeinsam mit Ihnen Weiterbildungsprogramme, die zu Ihrem Team passen. Unsere Trainer:innen setzen dabei moderne Lernmethoden ein, damit das Wissen auch im Arbeitsalltag ankommt.</p>
-        </div>
+      <div class="service-card">
+        <div class="service-card__num">02</div>
+        <h3>Schulungen und Weiterentwicklung</h3>
+        <p>Wir erarbeiten gemeinsam mit Ihnen Weiterbildungsprogramme, die zu Ihrem Team passen. Unsere Trainer:innen setzen dabei moderne Lernmethoden ein, damit das Wissen auch im Arbeitsalltag ankommt.</p>
       </div>
     </div>
 
-    <!-- Kategorie 3 -->
-    <div class="services-category" id="qualitaet">
-      <div class="category-header">
-        <h2>Qualitätsmanagement &amp; IT</h2>
+    <div class="services-grid" id="panel-qualitaet" role="tabpanel" aria-labelledby="qualitaet" hidden>
+      <div class="service-card">
+        <div class="service-card__num">01</div>
+        <h3>Webdesign und Internetauftritt</h3>
+        <p>Wir gestalten moderne, benutzerfreundliche Webseiten, die Ihre Marke nach Ihren Wünschen repräsentieren. Durch gezielte Suchmaschinenoptimierung (SEO) verbessern wir Ihre Sichtbarkeit auch langfristig.</p>
       </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-card__num">08</div>
-          <h3>Webdesign und Internetauftritt</h3>
-          <p>Wir gestalten moderne, benutzerfreundliche Webseiten, die Ihre Marke nach Ihren Wünschen repräsentieren. Durch gezielte Suchmaschinenoptimierung (SEO) verbessern wir Ihre Sichtbarkeit auch langfristig.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">09</div>
-          <h3>Prozessmanagement und Effizienz</h3>
-          <p>Wir nehmen Prozesse auf, definieren aussagekräftige KPIs, um Engpässe zu identifizieren und optimieren oder automatisieren Ihre Prozesse.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__num">10</div>
-          <h3>Data Analytics</h3>
-          <p>Wir analysieren Ihre Daten, um aus komplexen Informationen wertvolle Einblicke zu gewinnen und fundierte Entscheidungen zu ermöglichen.</p>
-        </div>
+      <div class="service-card">
+        <div class="service-card__num">02</div>
+        <h3>Prozessmanagement und Effizienz</h3>
+        <p>Wir nehmen Prozesse auf, definieren aussagekräftige KPIs, um Engpässe zu identifizieren und optimieren oder automatisieren Ihre Prozesse.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-card__num">03</div>
+        <h3>Data Analytics</h3>
+        <p>Wir analysieren Ihre Daten, um aus komplexen Informationen wertvolle Einblicke zu gewinnen und fundierte Entscheidungen zu ermöglichen.</p>
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ── BROSCHÜRE ── -->
+<section class="section section--grey" id="broschuere">
+  <div class="container">
+    <div class="wir-grid">
+      <div>
+        <img src="Bilder/Sonstige/broschuere-cover.webp" width="1400" height="787" alt="Titelseite der Consult One Unternehmensbroschüre" class="section-img" loading="lazy">
+      </div>
+      <div>
+        <h2 class="heading-bar">Unsere Broschüre zum Mitnehmen</h2>
+        <p>Alle Leistungen, ausgewählte Kundenprojekte und unser Projektablauf kompakt in einem PDF, zum Lesen in Ruhe oder Weiterleiten im Unternehmen.</p>
+        <br>
+        <a href="Dokumente/Consult-One-Broschuere.pdf" download class="btn btn--primary">Broschüre herunterladen</a>
+        <span class="brochure-meta">PDF, 11 Seiten, 2,7 MB</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -268,94 +274,140 @@
   </div>
 </section>
 
+<!-- ── REFERENZEN ── -->
+<section class="section" id="referenzen">
+  <div class="container">
+    <h2 class="heading-bar">Das sagen unsere Kunden</h2>
+    <p class="section-intro">Ein Auszug aus abgeschlossenen Projekten und dem Feedback danach.</p>
+
+    <div class="reference-pull">
+      <p class="reference-pull__quote">„Die studentischen Berater überzeugten im gesamten Projekt mit ihrer professionellen Arbeitsweise. Besonders hervorheben möchten wir die schnelle Einarbeitung in unsere unternehmensinternen Strukturen […]. Das umfangreiche Fachwissen im Bereich der Digitalisierung hat wichtige Impulse zur Findung einer individuellen Lösung gegeben. […] Aufgrund der sehr guten Projektergebnisse werden wir in Zukunft gerne wieder mit Consult One zusammenarbeiten.“</p>
+      <p class="reference-pull__author"><strong>Kathleen Hülsebusch</strong>, Kaufmännische Leitung, Lebenshilfe Braunschweig</p>
+      <p class="reference-pull__project">Roadmap zur Implementierung einer IT-Strategie</p>
+    </div>
+
+    <div class="reference-grid">
+      <div class="reference-card">
+        <img src="Bilder/KundenLogo/kosatec-logo.webp" width="1082" height="200" alt="KOSATEC Computer GmbH" class="reference-card__logo" loading="lazy">
+        <p class="reference-card__quote">„Die Zusammenarbeit mit dem Projektteam von Consult One war professionell, zielführend und konstruktiv. Besonders hervorheben möchten wir die praxisnahen Vorschläge, welche erarbeitet wurden. […] Aufgrund der erfolgreichen Zusammenarbeit können wir Consult One als Partner weiterempfehlen.“</p>
+        <p class="reference-card__author"><strong>Personal-Recruiting</strong></p>
+      </div>
+      <div class="reference-card">
+        <img src="Bilder/KundenLogo/kroschke-logo.webp" width="1112" height="245" alt="Kroschke" class="reference-card__logo" loading="lazy">
+        <p class="reference-card__quote">„Insbesondere der externe Blick auf unsere internen Strukturen gab uns in kurzer Zeit relevante Impulse für die Verbesserung unserer Produktionsstrukturen. […] Projekte mit Consult One können wir uneingeschränkt weiterempfehlen.“</p>
+        <p class="reference-card__author"><strong>Layout- und Prozessoptimierung</strong></p>
+      </div>
+      <div class="reference-card">
+        <img src="Bilder/KundenLogo/boeke-partner-logo.webp" width="1024" height="581" alt="Böke & Partner Steuerberatung" class="reference-card__logo" loading="lazy">
+        <p class="reference-card__quote">„Das Projektteam von Consult One unterstützte unsere Kanzlei bei der Entwicklung und Implementierung eines Wissensmanagementsystems. […] Die erwartungsübertreffende Arbeitsqualität sowie das gute Preis-/Leistungsverhältnis schätzen wir sehr und empfehlen diese daher uneingeschränkt weiter.“</p>
+        <p class="reference-card__author"><strong>Wissensmanagement-Konzept</strong></p>
+      </div>
+      <div class="reference-card">
+        <img src="Bilder/KundenLogo/Bosch-logotype.svg" width="549" height="232" alt="Bosch" class="reference-card__logo" loading="lazy">
+        <p class="reference-card__quote">„Consult One hat das ausgeschriebene Projekt zu unserer vollen Zufriedenheit durchgeführt und abgeschlossen. Die Recherche und Analyse liefert uns wertvolle Basisinformationen zur strategischen und operativen Weiterentwicklung unseres Projektes. Wir sind durchgängig mit der Leistung und der Motivation des Beraterteams zufrieden. […]“</p>
+        <p class="reference-card__author"><strong>Kunden- und Konkurrenzanalyse</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── PROJEKTABLAUF ── -->
 <section class="section section--grey" id="prozess">
-  <div class="container">
-    <h2 class="heading-bar">Unser Projektablauf</h2>
-    <p class="section-intro">Transparenz und klare Kommunikation stehen bei uns an erster Stelle. So läuft jedes unserer Projekte ab.</p>
 
-    <div class="process-track">
-
-      <div class="process-track__step">
-        <div class="process-track__icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-        </div>
-        <div class="process-track__content">
-          <div class="process-track__card">
-            <div class="process-track__badge">01</div>
+  <div class="process-flow">
+    <div class="process-flow__sticky">
+      <div class="container" style="padding-bottom: 1.5rem;">
+        <h2 class="heading-bar">Unser Projektablauf</h2>
+        <p class="section-intro" style="margin-bottom: 0;">Transparenz und klare Kommunikation stehen bei uns an erster Stelle. So läuft jedes unserer Projekte ab.</p>
+      </div>
+      <div class="process-flow__viewport">
+        <div class="process-flow__track">
+          <div class="process-flow__card is-passed">
+            <div class="process-flow__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            </div>
+            <p class="eyebrow">Schritt 01</p>
             <h3>Das Erstgespräch</h3>
             <p>In einem kostenlosen Erstgespräch besprechen wir gemeinsam Ihre Wünsche und Erwartungen.</p>
+            <a href="#termin" class="btn btn--primary process-flow__cta">Termin buchen</a>
           </div>
-        </div>
-      </div>
-
-      <div class="process-track__step">
-        <div class="process-track__icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        </div>
-        <div class="process-track__content">
-          <div class="process-track__card">
-            <div class="process-track__badge">02</div>
+          <div class="process-flow__card">
+            <div class="process-flow__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+            <p class="eyebrow">Schritt 02</p>
             <h3>Der Kick-Off</h3>
             <p>Im Kick-Off-Meeting klären wir wichtige Fragen, konkrete Ziele und die nächsten Schritte.</p>
           </div>
-        </div>
-      </div>
-
-      <div class="process-track__step">
-        <div class="process-track__icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-        </div>
-        <div class="process-track__content">
-          <div class="process-track__card">
-            <div class="process-track__badge">03</div>
+          <div class="process-flow__card">
+            <div class="process-flow__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            </div>
+            <p class="eyebrow">Schritt 03</p>
             <h3>Das Angebot</h3>
             <p>Basierend auf Ihren Anforderungen erstellen wir ein detailliertes, transparentes Angebot.</p>
           </div>
-        </div>
-      </div>
-
-      <div class="process-track__step">
-        <div class="process-track__icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-        </div>
-        <div class="process-track__content">
-          <div class="process-track__card">
-            <div class="process-track__badge">04</div>
+          <div class="process-flow__card">
+            <div class="process-flow__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+            </div>
+            <p class="eyebrow">Schritt 04</p>
             <h3>Die Bearbeitung</h3>
             <p>Direkt nach Angebotsannahme beginnt unser interdisziplinäres Projektteam mit der Projektarbeit.</p>
           </div>
-        </div>
-      </div>
-
-      <div class="process-track__step">
-        <div class="process-track__icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-        </div>
-        <div class="process-track__content">
-          <div class="process-track__card">
-            <div class="process-track__badge">05</div>
+          <div class="process-flow__card">
+            <div class="process-flow__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+            </div>
+            <p class="eyebrow">Schritt 05</p>
             <h3>Stetiger Dialog</h3>
             <p>Durch regelmäßigen Austausch halten wir Sie auf dem Laufenden und berücksichtigen Ihr Feedback.</p>
           </div>
-        </div>
-      </div>
-
-      <div class="process-track__step">
-        <div class="process-track__icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-        </div>
-        <div class="process-track__content">
-          <div class="process-track__card">
-            <div class="process-track__badge">06</div>
+          <div class="process-flow__card">
+            <div class="process-flow__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            </div>
+            <p class="eyebrow">Schritt 06</p>
             <h3>Das Ergebnis</h3>
             <p>Am Ende präsentieren wir Ihnen die für Sie passende Lösung und sorgen für einen reibungslosen Übergang.</p>
           </div>
         </div>
       </div>
-
     </div>
+  </div>
 
+</section>
+
+<!-- ── TERMINBUCHUNG ── -->
+<section class="section section--grey" id="termin">
+  <div class="container">
+    <div class="booking-panel">
+      <div>
+        <h2>Erstgespräch buchen</h2>
+        <p class="booking-panel__intro">Wählen Sie direkt einen freien Termin, ganz ohne Umweg über E-Mail. Wir melden uns mit einer Bestätigung zurück.</p>
+        <ul class="booking-panel__facts">
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Kostenlos &amp; unverbindlich</li>
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>Ca. 30 Minuten</li>
+          <li><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 10.5V7a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h12a1 1 0 001-1v-3.5l4 4v-11l-4 4z"/></svg>Per Video-Call</li>
+        </ul>
+      </div>
+      <div class="booking-panel__action">
+        <button
+          type="button"
+          class="btn btn--primary"
+          data-cal-link="consultone/erstgespraech"
+          data-cal-namespace="erstgespraech"
+          data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"auto"}'
+        >Termin auswählen</button>
+        <p class="booking-panel__note">
+          Kalender lädt nicht?
+          <a href="https://cal.com/consultone/erstgespraech" target="_blank" rel="noopener noreferrer">Direkt auf cal.com buchen</a>
+        </p>
+        <noscript>
+          <a href="https://cal.com/consultone/erstgespraech" target="_blank" rel="noopener noreferrer" class="btn btn--outline-white">Termin auswählen (öffnet cal.com)</a>
+        </noscript>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -411,7 +463,10 @@
       <div class="contact-cta__text">
         <h2 class="heading-bar">Ihr Projekt wartet.</h2>
         <p>Egal ob kleines Mittelstandsprojekt oder strategische Neuausrichtung, sprechen Sie uns an. Das Erstgespräch ist kostenlos und unverbindlich.</p>
-        <a href="mailto:kontakt@consult-one.de" class="btn btn--primary">Erstgespräch anfragen</a>
+        <div class="cta-buttons">
+          <a href="#termin" class="btn btn--primary">Termin buchen</a>
+          <a href="mailto:kontakt@consult-one.de" class="btn btn--outline-white">E-Mail schreiben</a>
+        </div>
       </div>
       <div>
         <p class="cta-label">Ihre Ansprechpartnerin für Projekte</p>
@@ -472,6 +527,8 @@
           <li><a href="leistungen.html#personal">Personal &amp; Entwicklung</a></li>
           <li><a href="leistungen.html#qualitaet">Qualitätsmanagement &amp; IT</a></li>
           <li><a href="leistungen.html#prozess">Projektablauf</a></li>
+          <li><a href="leistungen.html#referenzen">Referenzen</a></li>
+          <li><a href="leistungen.html#termin">Termin buchen</a></li>
         </ul>
       </div>
       <div class="footer__col">
@@ -491,5 +548,15 @@
 </footer>
 
 <script src="script.js"></script>
+
+<!-- Cal element-click embed code begins -->
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "erstgespraech", {origin:"https://app.cal.com"});
+  Cal.config = Cal.config || {};
+  Cal.config.forwardQueryParams = true;
+  Cal.ns.erstgespraech("ui", {"cssVarsPerTheme":{"light":{"cal-brand":"#333333"}},"hideEventTypeDetails":false,"layout":"month_view"});
+</script>
+<!-- Cal element-click embed code ends -->
 </body>
 </html>
