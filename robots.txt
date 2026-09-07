@@ -56,4 +56,4 @@ Allow: /
 User-agent: Bytespider
 Disallow: /
 
-Sitemap: https://www.consult-one.de/sitemap.xml
+Sitemap: https://consult-one.de/sitemap.xml

@@ -1,0 +1,19 @@
+{
+  "name": "Consult One Unternehmensberatung",
+  "short_name": "Consult One",
+  "icons": [
+    {
+      "src": "brand_assets/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "brand_assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#EE891D",
+  "background_color": "#242424",
+  "display": "standalone"
+}

@@ -458,3 +458,98 @@ function initProcessFlow(root) {
 }
 
 document.querySelectorAll('.process-flow').forEach(initProcessFlow);
+
+// Cal.com-Terminbuchung: Embed wird erst beim Klick nachgeladen, nicht beim
+// Seitenaufruf, damit vor der Buchungsabsicht keine Daten an app.cal.com fließen.
+function initCalBooking() {
+  const trigger = document.getElementById('calBookingTrigger');
+  if (!trigger) return;
+
+  const CAL_NAMESPACE = 'erstgespraech';
+  const FALLBACK_URL = 'https://cal.com/consultone/erstgespraech';
+  let loading = false;
+
+  function loadCalEmbed(onReady) {
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          const script = d.createElement('script');
+          script.src = A;
+          script.onload = onReady;
+          d.head.appendChild(script);
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === 'string') {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ['initNamespace', namespace]);
+          } else {
+            p(cal, ar);
+          }
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+    Cal('init', CAL_NAMESPACE, { origin: 'https://app.cal.com' });
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns[CAL_NAMESPACE]('ui', {
+      cssVarsPerTheme: { light: { 'cal-brand': '#333333' } },
+      hideEventTypeDetails: false,
+      layout: 'month_view'
+    });
+  }
+
+  trigger.addEventListener('click', e => {
+    // Embed bereits geladen: Cal.com hat inzwischen seinen eigenen Klick-Handler
+    // an diesen Button gehängt, der übernimmt jetzt.
+    if (window.Cal && window.Cal.loaded) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (loading) return;
+    loading = true;
+
+    const fallbackTimer = setTimeout(() => {
+      window.open(FALLBACK_URL, '_blank', 'noopener');
+    }, 6000);
+
+    loadCalEmbed(() => {
+      requestAnimationFrame(() => {
+        clearTimeout(fallbackTimer);
+        // Denselben Klick erneut auslösen, jetzt wo Cal.com seinen Handler
+        // an data-cal-link-Elemente gebunden hat.
+        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+      });
+    });
+  });
+}
+
+initCalBooking();
+
+// E-Mail-Links: mailto-href erst per JS zusammensetzen, damit einfache
+// Crawler ihn nicht direkt aus dem HTML-Quelltext lesen können. Der sichtbare
+// Text bleibt in jedem Fall lesbar, auch ohne JavaScript.
+function initMailLinks() {
+  document.querySelectorAll('a[data-mail-user]').forEach(link => {
+    const user = link.getAttribute('data-mail-user');
+    const domain = link.getAttribute('data-mail-domain');
+    if (user && domain) {
+      link.href = 'mailto:' + user + '@' + domain;
+    }
+  });
+}
+
+initMailLinks();
