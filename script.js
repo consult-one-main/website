@@ -110,6 +110,59 @@ if (partnerCarousel) {
   resetTimer();
 }
 
+// Start-up-Karussell: 3 Karten in voller Größe, je 1 kleinerer Teaser links/rechts
+const startupCarousel = document.getElementById('startupCarousel');
+if (startupCarousel) {
+  const items   = Array.from(startupCarousel.querySelectorAll('.startup-card'));
+  const prevBtn = document.getElementById('startupPrev');
+  const nextBtn = document.getElementById('startupNext');
+  const total   = items.length;
+  let current   = 0;
+  let timer;
+
+  const stateClasses = [
+    'startup-card--teaser-prev',
+    'startup-card--prev',
+    'startup-card--active',
+    'startup-card--next',
+    'startup-card--teaser-next'
+  ];
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    const prev       = (current - 1 + total) % total;
+    const next       = (current + 1) % total;
+    const teaserPrev = (current - 2 + total) % total;
+    const teaserNext = (current + 2) % total;
+
+    items.forEach((item, i) => {
+      item.classList.remove(...stateClasses);
+      if (i === current) item.classList.add('startup-card--active');
+      else if (i === prev) item.classList.add('startup-card--prev');
+      else if (i === next) item.classList.add('startup-card--next');
+      else if (i === teaserPrev) item.classList.add('startup-card--teaser-prev');
+      else if (i === teaserNext) item.classList.add('startup-card--teaser-next');
+    });
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 4500);
+  }
+
+  prevBtn.addEventListener('click', () => { goTo(current - 1); resetTimer(); });
+  nextBtn.addEventListener('click', () => { goTo(current + 1); resetTimer(); });
+
+  // Auto-Play pausiert, solange Maus oder Tastaturfokus im Karussell sind
+  startupCarousel.addEventListener('mouseenter', () => clearInterval(timer));
+  startupCarousel.addEventListener('mouseleave', resetTimer);
+  startupCarousel.addEventListener('focusin', () => clearInterval(timer));
+  startupCarousel.addEventListener('focusout', resetTimer);
+
+  goTo(0);
+  resetTimer();
+}
+
 // Counter animation for stats, triggers when stats enter the viewport
 function animateCounter(el, target, suffix, duration) {
   let startTime = null;
