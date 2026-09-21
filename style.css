@@ -267,6 +267,9 @@ p, .accordion-content li, .legal-block li {
   animation: heroFadeIn 2.4s ease forwards;
 }
 
+/* Nachfolgende Clips der Hero-Playlist: starten unsichtbar, script.js blendet sie ein */
+.hero-vid--queued { opacity: 0; animation: none; }
+
 @keyframes heroFadeIn {
   0%   { opacity: 0; }
   100% { opacity: 1; }
@@ -1165,13 +1168,11 @@ p, .accordion-content li, .legal-block li {
   background: var(--white);
   padding: 1.75rem;
   border-top: 3px solid var(--orange);
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s;
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.5rem), calc(100% - 1.5rem) 100%, 0 100%);
 }
 .reference-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), calc(100% - 2rem) 100%, 0 100%);
 }
 .reference-card__logo {
