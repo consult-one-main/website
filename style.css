@@ -80,6 +80,7 @@ p, .accordion-content li, .legal-block li {
 .hero__claim,
 .alumni-sublabel,
 .partner-logo-card__name,
+.event-card__location,
 .events-empty,
 .process-step__label,
 .voice-card__quote,
@@ -479,7 +480,12 @@ p, .accordion-content li, .legal-block li {
   align-items: center;
   gap: 0.9rem;
   width: 180px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease;
 }
+.partner-logo-card:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
+.partner-logo-card:active { transform: translateY(1px); }
 
 .partner-logo-card__box {
   width: 180px;
@@ -494,7 +500,8 @@ p, .accordion-content li, .legal-block li {
   transition: box-shadow 0.25s;
 }
 
-.partner-logo-card:hover .partner-logo-card__box {
+.partner-logo-card:hover .partner-logo-card__box,
+.partner-logo-card:focus-visible .partner-logo-card__box {
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
 }
 
@@ -506,7 +513,8 @@ p, .accordion-content li, .legal-block li {
   transition: filter 0.3s;
 }
 
-.partner-logo-card:hover .partner-logo-card__box img {
+.partner-logo-card:hover .partner-logo-card__box img,
+.partner-logo-card:focus-visible .partner-logo-card__box img {
   filter: grayscale(0%) opacity(100%);
 }
 
@@ -518,6 +526,8 @@ p, .accordion-content li, .legal-block li {
   color: var(--text-light);
   text-align: center;
 }
+.partner-logo-card:hover .partner-logo-card__name,
+.partner-logo-card:focus-visible .partner-logo-card__name { color: var(--orange); }
 
 /* ── PARTNER SPOTLIGHT CAROUSEL ─────────────────────────── */
 .partner-carousel {
@@ -1062,6 +1072,7 @@ p, .accordion-content li, .legal-block li {
   margin-bottom: 0.75rem;
 }
 .event-card__desc {
+  flex: 1 1 auto;
   font-size: 0.97rem;
   color: rgba(255,255,255,0.68);
   line-height: 1.65;
@@ -1072,7 +1083,6 @@ p, .accordion-content li, .legal-block li {
   width: 100%;
   box-sizing: border-box;
   margin: 1.25rem 0 0;
-  margin-top: auto;
   padding: 8px 14px;
   font-family: 'TradeGothicBold', sans-serif;
   font-weight: 700;
@@ -1090,6 +1100,11 @@ p, .accordion-content li, .legal-block li {
 .event-card__ics:focus-visible { background: var(--orange); border-color: var(--orange); }
 .event-card__ics:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
 .event-card__ics:active { background: #d47a16; border-color: #d47a16; }
+/* Anmelde-Link: gleiche orange Call-to-Action-Optik wie .btn--primary */
+.event-card__ics--primary { background: var(--orange); border-color: var(--orange); }
+.event-card__ics--primary:hover,
+.event-card__ics--primary:focus-visible { background: #d47a16; border-color: #d47a16; }
+.event-card__ics--primary:active { background: #b96a12; border-color: #b96a12; }
 .event-card__ics--disabled {
   opacity: 0.4;
   cursor: default;
@@ -1802,6 +1817,8 @@ p, .accordion-content li, .legal-block li {
 .process-flow__card {
   width: clamp(280px, 26vw, 360px);
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
   background: var(--white);
   padding: 1.75rem;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
@@ -1826,8 +1843,9 @@ p, .accordion-content li, .legal-block li {
 }
 .process-flow__icon svg { width: 22px; height: 22px; display: block; }
 .process-flow__card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; color: var(--dark-grey); }
-.process-flow__card p:not(.eyebrow) { font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; }
-.process-flow__cta { display: inline-block; margin-top: 1.25rem; }
+.process-flow__card p:not(.eyebrow) { flex: 1 1 auto; font-size: 1.02rem; color: var(--text-light); line-height: 1.65; text-transform: none; }
+/* Karten in einer Reihe sind gleich hoch; der Text wächst, dadurch sitzen die CTAs auf einer Höhe */
+.process-flow__cta { align-self: center; margin-top: 1.25rem; }
 
 /* Ohne Pinning (reduced motion / kein JS / zu wenig Höhe): native Reihe */
 .process-flow:not(.process-flow--pinned) .process-flow__viewport {

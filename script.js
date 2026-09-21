@@ -248,10 +248,10 @@ if (competencyTabs.length > 0) {
 const eventsGrid = document.getElementById('eventsGrid');
 if (eventsGrid) {
   const events = [
-    { title: 'Infoveranstaltung', date: '2026-11-03', hour: 18, minute: 30, timeLabel: '18:30 Uhr', location: null, desc: 'Lern Consult One und aktive Mitglieder unverbindlich kennen.' },
-    { title: 'Infoveranstaltung', date: '2026-11-11', hour: 18, minute: 30, timeLabel: '18:30 Uhr', location: null, desc: 'Zweiter Termin in diesem Semester, falls der erste bei dir nicht passt.' },
-    { title: 'Offenes Wochentreffen', date: '2026-11-17', hour: 20, minute: 10, timeLabel: '20:10 Uhr', location: null, desc: 'Unser reguläres Treffen steht allen Interessierten offen. Einfach vorbeikommen.' },
-    { title: "Women's Brunch", date: null, hour: null, minute: null, timeLabel: null, location: null, desc: 'Ein entspannter Brunch für alle Frauen, die Consult One in lockerer Atmosphäre kennenlernen möchten.' }
+    { title: 'Infoveranstaltung', date: '2026-11-03', hour: 18, minute: 30, timeLabel: '18:30 Uhr', location: 'Raum PK4.1 im Altgebäude der TU Braunschweig', desc: 'Lern Consult One und aktive Mitglieder unverbindlich kennen.' },
+    { title: 'Infoveranstaltung', date: '2026-11-11', hour: 18, minute: 30, timeLabel: '18:30 Uhr', location: 'Raum PK4.1 im Altgebäude der TU Braunschweig', desc: 'Zweiter Termin in diesem Semester, falls der erste bei dir nicht passt.' },
+    { title: "Women's Brunch", date: '2026-11-14', hour: null, minute: null, timeLabel: null, location: null, noLocation: true, signupUrl: 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=qs3KSFmk1UWe0F6KJGfYw2LgQ8yg04xHjc407oQw6SVUN0tLWkhKNktaNEpaMkZBVzhNSU0zM0hMUi4u', desc: 'Ein entspannter Brunch für alle Frauen, die Consult One in lockerer Atmosphäre kennenlernen möchten.' },
+    { title: 'Offenes Wochentreffen', date: '2026-11-17', hour: 20, minute: 10, timeLabel: '20:10 Uhr', location: 'Konferenzraum des Maschinenbauhauses der TU Braunschweig', desc: 'Unser reguläres Treffen steht allen Interessierten offen. Einfach vorbeikommen.' }
   ];
 
   const today = new Date();
@@ -304,11 +304,13 @@ if (eventsGrid) {
     const formatter = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: '2-digit', month: 'long' });
     eventsGrid.innerHTML = upcoming.map((ev) => {
       const dateTimeLabel = ev.date
-        ? formatter.format(new Date(ev.date)) + ', ' + (ev.timeLabel || 'Zeit wird noch bekannt gegeben')
+        ? formatter.format(new Date(ev.date)) + (ev.timeLabel ? ', ' + ev.timeLabel : '')
         : 'Termin folgt';
-      const locationLabel = ev.location || 'Ort wird noch bekannt gegeben';
+      const locationLabel = ev.noLocation ? '' : (ev.location || 'Ort wird noch bekannt gegeben');
       let icsButton = '';
-      if (ev.date) {
+      if (ev.signupUrl) {
+        icsButton = '<a class="event-card__ics event-card__ics--primary" href="' + ev.signupUrl + '" target="_blank" rel="noopener noreferrer">Anmelden</a>';
+      } else if (ev.date) {
         const slug = ev.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + ev.date;
         icsButton = '<a class="event-card__ics" href="' + buildIcsHref(ev, slug) + '" download="' + slug + '.ics">In Kalender speichern</a>';
       } else {
@@ -317,7 +319,7 @@ if (eventsGrid) {
       return '<div class="event-card">'
         + '<p class="event-card__datetime">' + dateTimeLabel + '</p>'
         + '<h3>' + ev.title + '</h3>'
-        + '<p class="event-card__location">' + locationLabel + '</p>'
+        + (locationLabel ? '<p class="event-card__location">' + locationLabel + '</p>' : '')
         + '<p class="event-card__desc">' + ev.desc + '</p>'
         + icsButton
         + '</div>';

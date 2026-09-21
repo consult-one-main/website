@@ -1,10 +1,10 @@
 # Consult One · Studentische Unternehmensberatung Braunschweig
 
-> Consult One ist die erste studentische Unternehmensberatung im Großraum Braunschweig, gegründet 2002 an der TU Braunschweig. Ein interdisziplinäres Team aus über 30 aktiven Mitgliedern aus mehr als 15 Studiengängen berät Unternehmen in Strategie, Personal und Qualitätsmanagement/IT. Als Mitglied im BDSU arbeitet Consult One nach zertifizierten Qualitätsstandards (ISO 9001). Sprache: Deutsch.
+> Consult One ist die erste studentische Unternehmensberatung im Großraum Braunschweig, gegründet 2002 an der TU Braunschweig. Ein interdisziplinäres Team aus über 30 aktiven studentischen Berater:innen aus mehr als 15 Studiengängen berät Unternehmen in Qualitätsmanagement/IT, Strategie und Personal. Als Mitglied im BDSU arbeitet Consult One nach zertifizierten Qualitätsstandards (ISO 9001). Sprache: Deutsch.
 
 ## Kernseiten
 - [Startseite](https://consult-one.de/): Überblick über Consult One, Leistungen, Kennzahlen und Referenzkunden
-- [Leistungen](https://consult-one.de/leistungen.html): Strategie & Potential, Personal & Entwicklung, Qualitätsmanagement & IT, Kundenreferenzen, Broschüre zum Download, Terminbuchung fürs Erstgespräch
+- [Leistungen](https://consult-one.de/leistungen.html): Qualitätsmanagement & IT, Strategie & Potenzial, Personal & Entwicklung, Kundenreferenzen, Broschüre zum Download, Terminbuchung fürs Erstgespräch
 - [Über uns](https://consult-one.de/ueber-uns.html): Team, Vorstand, Werte, Netzwerk und Partner
 - [Für Studierende](https://consult-one.de/fuer-studierende.html): Mitgliedschaft, Anwartschaft und Bewerbungsprozess
 
