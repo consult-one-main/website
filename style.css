@@ -1970,7 +1970,7 @@ p, .accordion-content li, .legal-block li {
   .training-img { transition: none; }
 }
 @media (max-width: 768px) {
-  .training-img-wrapper { height: 280px; }
+  .training-img-wrapper { height: auto; aspect-ratio: 16 / 9; max-height: 280px; }
 }
 
 /* ── ENTRY CARDS (Dein Einstieg) ─────────────────────────── */
@@ -2100,7 +2100,7 @@ p, .accordion-content li, .legal-block li {
   .footer__bottom   { flex-direction: column; gap: 0.75rem; text-align: center; }
   .contact-person   { flex-direction: column; text-align: center; }
   .page-hero        { padding: 56px 0 80px; }
-  .photo-carousel   { height: 240px; }
+  .photo-carousel   { height: auto; aspect-ratio: 16 / 9; max-height: 240px; }
   .reference-pull   { padding: 2rem 1.5rem; }
   .booking-panel    { padding: 2rem 1.5rem; clip-path: none; border-top: 3px solid var(--orange); }
   .booking-panel::before { display: none; }
