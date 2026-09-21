@@ -399,6 +399,136 @@ document.querySelectorAll('.accordion').forEach(group => {
   });
 });
 
+// Hero-Video (Startseite): Die Clips aus data-videos laufen nacheinander, dazwischen
+// wird die Fläche langsam dunkel und der nächste Clip blendet wieder ein. Zwei
+// <video>-Elemente wechseln sich ab. Der nächste Clip lädt erst, wenn der laufende
+// komplett geladen ist, und es wird nur überblendet, wenn er ruckelfrei durchspielen
+// kann; sonst wiederholt sich der aktuelle Clip. Ohne JS und bei reduced-motion
+// loopt nur der erste Clip aus dem Markup.
+function initHeroVideos() {
+  const stage = document.querySelector('.hero__img[data-videos]');
+  const first = stage && stage.querySelector('.hero-vid');
+  const clips = stage ? stage.dataset.videos.split(',').map(src => src.trim()).filter(Boolean) : [];
+  if (!first || clips.length < 2) return;
+
+  // Datensparmodus oder sehr langsames Netz (nur Chromium-Browser melden das):
+  // Video gar nicht erst laden, das Poster bleibt stehen.
+  const conn = navigator.connection;
+  if (conn && (conn.saveData || /^(slow-2g|2g|3g)$/.test(conn.effectiveType))) {
+    first.removeAttribute('src');
+    first.load();
+    return;
+  }
+
+  // Unter 769px ist das Hero-Bild ausgeblendet: das Video dort gar nicht erst laden,
+  // erst wenn das Fenster später breiter wird (z. B. Tablet quer).
+  const wide = window.matchMedia('(min-width: 769px)');
+  if (!wide.matches) {
+    first.removeAttribute('src');
+    first.load();
+    wide.addEventListener('change', e => {
+      if (!e.matches) return;
+      first.src = clips[0];
+      playHeroVideos(stage, first, clips);
+    }, { once: true });
+    return;
+  }
+  playHeroVideos(stage, first, clips);
+}
+
+function playHeroVideos(stage, first, clips) {
+  if (!stage.animate || reduceMotion) return;
+
+  const FADE_OUT = 1500;      // ms, Clip blendet aus
+  const HOLD = 400;           // ms, Fläche bleibt dunkel
+  const FADE_IN = 1500;       // ms, nächster Clip blendet ein
+  const START_TIMEOUT = 8000; // ms, so lange darf der nächste Clip zum Starten brauchen
+  const LEAD = (FADE_OUT + 300) / 1000; // s vor Clipende, Puffer für das grobe timeupdate-Intervall
+
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const fade = (el, from, to, ms) => el.animate(
+    [{ opacity: from }, { opacity: to }],
+    { duration: ms, easing: 'ease-in-out', fill: 'forwards' }
+  ).finished;
+  const fullyLoaded = video => {
+    const b = video.buffered;
+    return b.length > 0 && video.duration > 0 && b.end(b.length - 1) >= video.duration - 0.3;
+  };
+
+  let current = first;
+  let standby = document.createElement('video');
+  let index = 0;
+  let switching = false;
+
+  // Das erste Video wird später zum Puffer; dafür muss es vollständig vorladen dürfen.
+  first.loop = false;
+  first.preload = 'auto';
+
+  standby.className = 'hero-vid hero-vid--queued';
+  standby.muted = true;
+  standby.playsInline = true;
+  standby.preload = 'auto'; // lädt erst, sobald src gesetzt ist
+  stage.appendChild(standby);
+
+  // Der nächste Clip soll nicht um Bandbreite mit dem laufenden konkurrieren
+  // (Seitenaufbau, langsames Netz): Er wird erst geladen, wenn der laufende komplett da ist.
+  const cueNext = () => {
+    if (standby.getAttribute('src') || !fullyLoaded(current)) return;
+    standby.src = clips[(index + 1) % clips.length];
+  };
+  const nextIsReady = () => standby.readyState >= 4; // Browser: spielt ohne Ruckeln durch
+
+  async function advance() {
+    if (switching) return;
+    switching = true;
+    const outgoing = current;
+    await fade(outgoing, 1, 0, FADE_OUT);
+    await wait(HOLD);
+
+    // Der nächste Clip blendet erst ein, wenn er wirklich läuft. Startet er trotz
+    // Bereitschaft nicht, läuft der aktuelle Clip noch einmal.
+    const incoming = standby;
+    const started = await Promise.race([
+      incoming.play().then(() => true, () => false),
+      wait(START_TIMEOUT).then(() => false)
+    ]);
+    if (started) {
+      outgoing.pause();
+      outgoing.autoplay = false; // sonst startet es mit einem neuen src von allein
+      outgoing.removeAttribute('src');
+      outgoing.load();
+      current = incoming;
+      standby = outgoing;
+      index = (index + 1) % clips.length;
+    } else {
+      incoming.pause();
+      outgoing.currentTime = 0;
+      outgoing.play().catch(() => {});
+    }
+    await fade(current, 0, 1, FADE_IN);
+    switching = false;
+  }
+
+  [first, standby].forEach(video => {
+    video.addEventListener('timeupdate', () => {
+      if (video !== current) return;
+      cueNext();
+      if (!switching && nextIsReady() && video.duration - video.currentTime <= LEAD) advance();
+    });
+    video.addEventListener('ended', () => {
+      if (video !== current || switching) return;
+      if (nextIsReady()) {
+        advance();
+      } else {
+        video.currentTime = 0; // nächster Clip noch nicht bereit: aktuellen wiederholen
+        video.play().catch(() => {});
+      }
+    });
+  });
+}
+
+initHeroVideos();
+
 // Leistungen: Kategorie-Tabs
 const servicesTablist = document.querySelector('.services-tabs');
 if (servicesTablist) {
