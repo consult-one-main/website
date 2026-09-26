@@ -6,4 +6,6 @@ node_modules/
 temporary screenshots/
 brand_assets/*.pdf
 brand_assets/**/*.ai
+# Desktop-Schriftdateien bleiben lokal, die Website nutzt nur .woff2
+brand_assets/**/*.ttf
 Bilder/Videos/raw/

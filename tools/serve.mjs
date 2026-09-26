@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const ROOT = path.dirname(fileURLToPath(import.meta.url));
+// Liegt in tools/, bedient bzw. schreibt aber das Projektverzeichnis darüber.
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 3000;
 
 const MIME = {
@@ -26,15 +27,38 @@ const MIME = {
   '.woff2':'font/woff2',
 };
 
+// Bildet das Verhalten von GitHub Pages nach: /pfad/ wird aus /pfad/index.html
+// bedient, alles Unbekannte landet auf 404.html.
+function resolve(urlPath) {
+  const candidates = [urlPath];
+  if (urlPath.endsWith('/')) candidates.push(urlPath + 'index.html');
+  else candidates.push(urlPath + '/index.html');
+  for (const c of candidates) {
+    const f = path.join(ROOT, c);
+    try { if (fs.statSync(f).isFile()) return f; } catch {}
+  }
+  return null;
+}
+
+function serve404(res) {
+  const notFound = path.join(ROOT, '404.html');
+  try {
+    const body = fs.readFileSync(notFound);
+    res.writeHead(404, { 'Content-Type': MIME['.html'], 'Content-Length': body.length });
+    res.end(body);
+  } catch {
+    res.writeHead(404); res.end('Not found');
+  }
+}
+
 http.createServer((req, res) => {
   let urlPath = decodeURIComponent(req.url.split('?')[0]);
   if (urlPath === '/') urlPath = '/index.html';
-  const filePath = path.join(ROOT, urlPath);
+  const filePath = resolve(urlPath);
+  if (!filePath) { serve404(res); return; }
 
   fs.stat(filePath, (err, stat) => {
-    if (err || !stat.isFile()) {
-      res.writeHead(404); res.end('Not found'); return;
-    }
+    if (err || !stat.isFile()) { serve404(res); return; }
 
     const ext  = path.extname(filePath).toLowerCase();
     const mime = MIME[ext] || 'application/octet-stream';

@@ -245,20 +245,16 @@ if (competencyTabs.length > 0) {
 }
 
 // Anstehende Termine (fuer-studierende.html)
+// Die Termine selbst stehen in data/termine.json, damit sie ohne Code-Kenntnisse
+// direkt im GitHub-Browser gepflegt werden können – siehe PFLEGE.md.
 const eventsGrid = document.getElementById('eventsGrid');
 if (eventsGrid) {
-  const events = [
-    { title: 'Infoveranstaltung', date: '2026-11-03', hour: 18, minute: 30, timeLabel: '18:30 Uhr', location: 'Raum PK4.1 im Altgebäude der TU Braunschweig', desc: 'Lern Consult One und aktive Mitglieder unverbindlich kennen.' },
-    { title: 'Infoveranstaltung', date: '2026-11-11', hour: 18, minute: 30, timeLabel: '18:30 Uhr', location: 'Raum PK4.1 im Altgebäude der TU Braunschweig', desc: 'Zweiter Termin in diesem Semester, falls der erste bei dir nicht passt.' },
-    { title: "Women's Brunch", date: '2026-11-14', hour: null, minute: null, timeLabel: null, location: null, noLocation: true, signupUrl: 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=qs3KSFmk1UWe0F6KJGfYw2LgQ8yg04xHjc407oQw6SVUN0tLWkhKNktaNEpaMkZBVzhNSU0zM0hMUi4u', desc: 'Ein entspannter Brunch für alle Frauen, die Consult One in lockerer Atmosphäre kennenlernen möchten.' },
-    { title: 'Offenes Wochentreffen', date: '2026-11-17', hour: 20, minute: 10, timeLabel: '20:10 Uhr', location: 'Konferenzraum des Maschinenbauhauses der TU Braunschweig', desc: 'Unser reguläres Treffen steht allen Interessierten offen. Einfach vorbeikommen.' }
-  ];
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const upcoming = events.filter(ev => !ev.date || new Date(ev.date) >= today);
   const emptyState = document.getElementById('eventsEmpty');
+
+  function showEventsEmpty() {
+    eventsGrid.hidden = true;
+    if (emptyState) emptyState.hidden = false;
+  }
 
   function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -297,11 +293,22 @@ if (eventsGrid) {
     return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(lines.join('\r\n'));
   }
 
-  if (upcoming.length === 0) {
-    eventsGrid.hidden = true;
-    if (emptyState) emptyState.hidden = false;
-  } else {
+  function renderEvents(events) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Abgelaufene Termine verschwinden von selbst; alte Einträge müssen nicht
+    // aus data/termine.json gelöscht werden.
+    const upcoming = events.filter(ev => !ev.date || new Date(ev.date) >= today);
+
+    if (upcoming.length === 0) {
+      showEventsEmpty();
+      return;
+    }
+
     const formatter = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: '2-digit', month: 'long' });
+    eventsGrid.hidden = false;
+    if (emptyState) emptyState.hidden = true;
     eventsGrid.innerHTML = upcoming.map((ev) => {
       const dateTimeLabel = ev.date
         ? formatter.format(new Date(ev.date)) + (ev.timeLabel ? ', ' + ev.timeLabel : '')
@@ -325,6 +332,28 @@ if (eventsGrid) {
         + '</div>';
     }).join('');
   }
+
+  // Jeder Fehler – Datei fehlt, JSON hat einen Tippfehler, Netzwerk weg – landet im
+  // bereits vorhandenen Leerzustand. Ein falsches Komma in data/termine.json darf die
+  // Seite nie zerbrechen.
+  fetch('data/termine.json', { cache: 'no-cache' })
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    })
+    .then(data => {
+      if (!Array.isArray(data)) throw new Error('data/termine.json enthält keine Liste');
+      const valid = data.filter(ev => ev && typeof ev.title === 'string' && typeof ev.desc === 'string');
+      if (valid.length === 0) {
+        showEventsEmpty();
+        return;
+      }
+      renderEvents(valid);
+    })
+    .catch(err => {
+      console.error('Termine konnten nicht geladen werden:', err);
+      showEventsEmpty();
+    });
 }
 
 // Akkordeon: sanftes Auf-/Zuklappen per Web Animations API, nur ein Panel pro Gruppe offen

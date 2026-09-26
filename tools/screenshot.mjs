@@ -3,7 +3,8 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const ROOT = path.dirname(fileURLToPath(import.meta.url));
+// Liegt in tools/, bedient bzw. schreibt aber das Projektverzeichnis darüber.
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = path.join(ROOT, 'temporary screenshots');
 
 const url = process.argv[2];
@@ -12,7 +13,7 @@ const width = parseInt(process.argv[4] || '1440', 10);
 const height = parseInt(process.argv[5] || '900', 10);
 
 if (!url) {
-  console.error('Usage: node screenshot.mjs <url> [label] [width] [height]');
+  console.error('Usage: node tools/screenshot.mjs <url> [label] [width] [height]');
   process.exit(1);
 }
 
